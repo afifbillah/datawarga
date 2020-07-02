@@ -1,0 +1,405 @@
+create table pegawai_90486
+(
+id_pegawai integer not null,
+nama_depan varchar2(15),
+nama_belakang varchar2(15),
+tanggal_lahir date,
+alamat varchar2(100),
+kode_pos number(7),
+no_telpn number(12),
+constraint PK_pegawai primary key (id_pegawai)
+);
+
+create table pelanggan_90486
+(
+id_pelanggan integer not null,
+nama_depan varchar2(15),
+nama_belakang varchar2(15),
+tanggal_lahir date,
+alamat varchar2(100),
+kode_pos number(7),
+no_telp number(12),
+constraint PK_pelanggan primary key (id_pelanggan)
+);
+
+
+create table kurir_90486
+(
+id_kurir integer not null,
+nama_perusahaan varchar2(16),
+no_tlp number(12),
+constraint PK_kurir primary key (id_kurir)
+);
+
+create table pemasok_90486
+(
+id_pemasok integer not null,
+nama_perusahaan varchar2(15),
+alamat varchar2(100),
+kode_pos number(7),
+no_tlp number(12),
+constraint PK_pemasok primary key (id_pemasok)
+);
+
+create table kategori_90486
+(
+id_kategori integer not null,
+nama_kategori varchar2(16),
+deskripsi varchar(20),
+constraint PK_kategori primary key (id_kategori)
+);
+
+create table produk_90486
+(
+id_produk integer not null,
+id_pemasok integer,
+id_kategori integer,
+nama_produk varchar2(50),
+harga_satuan number(9),
+stock_produk number(3),
+constraint PK_produk primary key(id_produk),
+constraint fk_pemasok foreign key (id_pemasok)
+references pemasok_90486(id_pemasok),
+constraint fk_kategori foreign key (id_kategori)
+references kategori_90486 (id_kategori)
+);
+
+create table pemesanan_90486
+(
+id_pemesanan integer not null,
+id_pelanggan integer,
+id_pegawai integer,
+id_kurir integer,
+tanggal_pemesanan date,
+tanggal_pengiriman date,
+alamat_pengiriman varchar2(100),
+harga_total number(9),
+constraint PK_pemesanan primary key (id_pemesanan)
+);
+
+alter table pemesanan_90486
+add constraint fk_id_pelanggan foreign key (id_pelanggan)
+references pelanggan_90486 (id_pelanggan)
+add constraint fk_id_pegawai foreign key (id_pegawai)
+references pegawai_90486 (id_pegawai)
+add constraint fk_id_kurir foreign key (id_kurir)
+references kurir_90486 (id_kurir);
+
+create table detail_pemesanan_90486
+(
+id_produk integer not null,
+id_pemesanan integer,
+jumlah number(3),
+diskon float(4)
+);
+
+
+alter table detail_pemesanan_90486
+add constraint fk_id_produk foreign key (id_produk)
+references produk_90486 (id_produk)
+add constraint fk_id_pemesanan foreign key (id_pemesanan)
+references pemesanan_90486 (id_pemesanan);
+  
+ALTER TABLE detail_pemesanan_90486
+DROP CONSTRAINT fk_id_pemesanan;
+
+ALTER TABLE pemesanan_90486
+MODIFY  alamat_pengiriman varchar2(100);
+
+
+kelahiran
+insert into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(1111, '3558042210970012', 'Rabu', to_date('01/10/1997','dd/mm/yyyy'), 'Surabaya', 'Normal');
+insert into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(1112, '3668058810971152', 'Senin', to_date('22/05/1995','dd/mm/yyyy'), 'Surabaya', 'caesar');
+
+
+insert into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(2222, '3558042210970014', 'Rabu', to_date('01/10/1997','dd/mm/yyyy'), 'Surabaya', 'Normal');
+insert into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(3333, '3668058810971153', 'Senin', to_date('22/05/1995','dd/mm/yyyy'), 'Surabaya', 'caesar');
+
+insert all
+into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(1113, '3668058810972258', 'Selasa', to_date('02/04/1996','dd/mm/yyyy'), 'Sidoarjo', 'Normal')
+into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(1114, '3668058810973354', 'Rabu', to_date('09/12/1998','dd/mm/yyyy'), 'Trenggalek', 'Caesar')
+into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(1115, '3668058810973354', 'Rabu', to_date('09/12/1998','dd/mm/yyyy'), 'Trenggalek', 'Caesar')
+select 1 from dual;
+
+insert all
+into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(4444, '3668058810972258', 'Selasa', to_date('02/04/1996','dd/mm/yyyy'), 'Sidoarjo', 'Normal')
+into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(5555, '3668058810973354', 'Rabu', to_date('09/12/1998','dd/mm/yyyy'), 'Trenggalek', 'Caesar')
+into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(6666, '3668058810973354', 'Rabu', to_date('09/12/1998','dd/mm/yyyy'), 'Trenggalek', 'Caesar')
+select 1 from dual;
+
+keluarga
+insert into keluarga (nik, no_lahir, kodepos, no_kk, status , jalan, rt, rw) values 
+('3271046504930002', '1111', '60242', '3558042210970012', 'Belum kawin', 'jl. kita masih panjang 12', '4', '8');
+insert into keluarga (nik, no_lahir, kodepos, no_kk, status , jalan, rt, rw) values 
+('3276046501920003', '1112', '60243', '3668058810971152', 'Kawin', 'jl. in aja dulu 225', '5', '8');
+insert into keluarga (nik, no_lahir, kodepos, no_kk, status , jalan, rt, rw) values 
+('3276046501920054', '5555', '60249', '3668058810973354', 'Kawin', 'jl. in aja dulu 225', '5', '8');
+
+insert all
+into keluarga (nik, no_lahir, kodepos, no_kk, status , jalan, rt, rw) values 
+('3175092308900003', '1113', '60244', '3668058810972258', 'kawin', 'jl. dan terima apa ada nya 78', '1', '6')
+into keluarga (nik, no_lahir, kodepos, no_kk, status , jalan, rt, rw) values 
+('5102082206920002', '1114', '60245', '3668058810973354', 'Belum kawin', 'jl. lurus 882', '2', '7')
+into keluarga (nik, no_lahir, kodepos, no_kk, status , jalan, rt, rw) values 
+('1671145809910002', '1115', '60246', '3668058810973354', 'Belum kawin', 'jl. belok 51', '7', '9')
+select 1 from dual;
+
+penduduk
+insert into penduduk (nik, no_kk, nama, jk, agama , pendidikan, pekerjaan, no_telp) values 
+(3271046504930002, '3558042210970012', 'Mario Beto', 'L', 'Katolik', 'S1 - Sipil', 'Manager Proyek', '081233452241');
+insert into penduduk (nik, no_kk, nama, jk, agama , pendidikan, pekerjaan, no_telp) values 
+(3276046501920003, '3668058810971152', 'Suci Hidayati', 'P', 'Islam', 'S2 - Matematika', 'Dosen', '081233452545');
+
+insert all
+into penduduk (nik, no_kk, nama, jk, agama , pendidikan, pekerjaan, no_telp) values 
+(3175092308900003, '3668058810972258', 'Nina Kumalasari', 'P', 'Islam', 'SMA', 'Ibu Rumah tangga', '081233458847')
+into penduduk (nik, no_kk, nama, jk, agama , pendidikan, pekerjaan, no_telp) values 
+(5102082206920002, '3668058810973354', 'Budi Setiawan', 'L', 'Islam', 'SMA', 'Pelajar', '081233457758')
+into penduduk (nik, no_kk, nama, jk, agama , pendidikan, pekerjaan, no_telp) values 
+(1671145809910002, '3668058810973354', 'Rudi Setiawan', 'L', 'Islam', 'SMA', 'Pelajar', '081233458825')
+select 1 from dual;
+
+
+wilayah
+INSERT INTO wilayah
+VALUES(SEQ_wil.nextval, '60242','sawungaling','wonokromo','surabaya','jawa timur');
+INSERT INTO wilayah
+VALUES(SEQ_wil.nextval, '60243','ngagel','wonokromo','surabaya','jawa timur');
+INSERT INTO wilayah
+VALUES(SEQ_wil.nextval, '60244','kutai','wonokromo','surabaya','jawa timur');
+INSERT INTO wilayah
+VALUES(SEQ_wil.nextval, '60245','ngadiluwih','Durenan','Trenggalek','jawa timur');
+INSERT INTO wilayah
+VALUES(SEQ_wil.nextval, '60246','ngampak','Durenan','Trenggalek','jawa timur');
+INSERT INTO wilayah
+VALUES(SEQ_wil.nextval, '60249','ngampak','Durenan','Trenggalek','jawa timur');
+
+update wilayah
+set kecamatan='Sukolilo'
+where kecamatan like '%wonokromo%' or kota like '%surabaya%'
+and id_wilayah <= 10;
+
+delete from wilayah
+where kecamatan like '%sukolilo%' or kota like 'surabaya'
+and id_wilayah <= 10;
+
+insert into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(1122, '3668058810978888', 'Selasa', to_date('23/05/1995','dd/mm/yyyy'), 'Mojokerto', 'Normal');
+
+commit;
+
+update kelahiran
+set kota_lahir='Malang'
+where no_lahir = 1116;
+
+rollback;
+
+
+
+select * from keluarga order by kodepos desc;
+
+
+select kecamatan from wilayah group by kecamatan;
+
+
+update wilayah
+set provinsi='jatim'
+where kodepos like '%602%' or kota like '%a%'
+and id_wilayah <= 13;
+
+update kelahiran
+set "90486_keterangan" = 'sesar'
+where "90486_keterangan" like '%caesar%' or "90486_keterangan" like '%C%'
+and no_lahir <=7777;
+
+delete from kelahiran where no_lahir > 1116
+
+
+insert all
+into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(1117, '5108080312090060', 'Jumat', to_date('04/04/1997','dd/mm/yyyy'), 'Ngawi', 'caesar')
+into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(1118, '5108082411060110', 'Sabtu', to_date('05/02/1994','dd/mm/yyyy'), 'Ngawi', 'caesar')
+into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(1119, '5108083105080000', 'Senin', to_date('15/07/1996','dd/mm/yyyy'), 'Ngawi', 'caesar')
+into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(1120, '5108082111060110', 'Kamis', to_date('19/08/1999','dd/mm/yyyy'), 'Ngawi', 'caesar')
+into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(1121, '5108080312090050', 'Selasa', to_date('03/03/1998','dd/mm/yyyy'), 'Ngawi', 'caesar')
+select * from dual;
+
+insert all
+into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(1123, '3668058810973359', 'Selasa', to_date('02/04/1996','dd/mm/yyyy'), 'Sidoarjo', 'Normal')
+into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(1124, '3668058810973378', 'Rabu', to_date('09/12/1998','dd/mm/yyyy'), 'Mojokerto', 'Normal')
+into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(1125, '3668058810973365', 'Rabu', to_date('09/12/1998','dd/mm/yyyy'), 'Mojokerto', 'Normal')
+into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(1126, '3668058810973398', 'Rabu', to_date('09/12/1998','dd/mm/yyyy'), 'Surabaya', 'Normal')
+into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(1127, '3668058810973336', 'Rabu', to_date('09/12/1998','dd/mm/yyyy'), 'Surabaya', 'Normal')
+select 1 from dual;
+
+insert all
+into keluarga (nik, no_lahir, kodepos, no_kk, status , jalan, rt, rw) values 
+('5108086109770000', '1113', '60344', '3668058810973359', 'kawin', 'jl. dan terima apa ada nya 78', '1', '6')
+into keluarga (nik, no_lahir, kodepos, no_kk, status , jalan, rt, rw) values 
+('5108087112600240', '1114', '60345', '3668058810973378', 'Belum kawin', 'jl. lurus 882', '2', '7')
+into keluarga (nik, no_lahir, kodepos, no_kk, status , jalan, rt, rw) values 
+('5108087112640150', '1115', '60347', '3668058810973365', 'Belum kawin', 'jl. belok 52', '7', '9')
+into keluarga (nik, no_lahir, kodepos, no_kk, status , jalan, rt, rw) values 
+('5108087112720100', '1115', '60348', '3668058810973354', 'Belum kawin', 'jl. belok 53', '7', '9')
+into keluarga (nik, no_lahir, kodepos, no_kk, status , jalan, rt, rw) values 
+('5108085212770000', '1115', '60349', '3668058810973336', 'Belum kawin', 'jl. belok 54', '7', '9')
+select 1 from dual;
+
+insert all
+into penduduk (nik, no_kk, nama, jk, agama , pendidikan, pekerjaan, no_telp) values 
+(5108086109770000, '3668058810973359', 'Siti Munari', 'P', 'Islam', 'SMA', 'Ibu Rumah tangga', '082333458847')
+into penduduk (nik, no_kk, nama, jk, agama , pendidikan, pekerjaan, no_telp) values 
+(5108087112600240, '3668058810973378', 'Bambank mariadi', 'L', 'Islam', 'SMA', 'Pelajar', '082333457758')
+into penduduk (nik, no_kk, nama, jk, agama , pendidikan, pekerjaan, no_telp) values 
+(5108087112640150, '3668058810973365', 'Rion folia', 'L', 'Islam', 'SMA', 'Pelajar', '082333458825')
+into penduduk (nik, no_kk, nama, jk, agama , pendidikan, pekerjaan, no_telp) values 
+(5108087112720100, '3668058810973354', 'akhwan masua', 'L', 'Islam', 'SMA', 'Pelajar', '082333454825')
+into penduduk (nik, no_kk, nama, jk, agama , pendidikan, pekerjaan, no_telp) values 
+(5108085212770000, '3668058810973336', 'nono pontia', 'L', 'Islam', 'SMA', 'Pelajar', '082333459925')
+select 1 from dual;
+
+INSERT INTO wilayah
+VALUES(SEQ_wil.nextval, '60344','sawungaling','wonokromo','surabaya','jawa timur');
+INSERT INTO wilayah
+VALUES(SEQ_wil.nextval, '60345','ngagel','wonokromo','surabaya','jawa timur');
+INSERT INTO wilayah
+VALUES(SEQ_wil.nextval, '60347','kutai','wonokromo','surabaya','jawa timur');
+INSERT INTO wilayah
+VALUES(SEQ_wil.nextval, '60348','ngadiluwih','Durenan','Trenggalek','jawa timur');
+INSERT INTO wilayah
+VALUES(SEQ_wil.nextval, '60349','ngampak','Durenan','Trenggalek','jawa timur');
+
+select nik, max(rt) as rt_terbesar, min(rt) as rt_terkecil from keluarga group by nik;
+
+select pendidikan, count(pendidikan) as banyak_sma from penduduk where pekerjaan='Pelajar' or agama like '%Islam%' and pendidikan='SMA' group by pendidikan;
+
+select status, sum(rt) as total_rt from keluarga where status='Belum kawin' group by status;
+
+select status, avg(sum(rt)) as total_rt from keluarga where status='Belum kawin' group by status;
+
+select status, avg(total_rt) as rata_rata_rt from(select sum(rt) as total_rt from keluarga where status ='belum kawin'), keluarga group by status;
+
+select no_lahir, (select max(rt) as terbesar, min(rt) as terkecil from wilayah where wilayah.kodepos=keluarga.kodepos) as test from keluarga;
+
+select nama,(select count(status) from keluarga where keluarga.nik=penduduk.nik) as banyaknya_status from penduduk where agama='Islam' or pekerjaan='Pelajar';
+
+Select sum(penduduk.jumlah) from keluarga s join (select no_kk, count(*) as jumlah from penduduk group by no_kk) penduduk on penduduk.no_kk=s.no_kk;
+
+Select avg(penduduk.jumlah) from keluarga s join (select no_kk, count(*) as jumlah from penduduk group by no_kk) penduduk on penduduk.no_kk=s.no_kk;
+
+Select * from keluarga where nik= (select nik from penduduk where nik='3175092308900003' );
+
+Select nik, (select no_lahir from kelahiran where kelahiran.no_kk =keluarga.no_kk And rownum<=1) as test, ( select rt from wilayah where keluarga.kodepos=wilayah.kodepos And rownum<=1) as rt from keluarga where nik= (select nik from penduduk where nik='3175092308900003') ;
+
+Select sum(penduduk.jumlah) from keluarga s join (select no_kk, count(*) as jumlah from penduduk group by no_kk) penduduk on penduduk.no_kk=s.no_kk
+
+Select avg(penduduk.jumlah) from keluarga s join (select no_kk, count(*) as jumlah from penduduk group by no_kk) penduduk on penduduk.no_kk=s.no_kk
+
+Select * from keluarga where nik= (select nik from penduduk where nik='3175092308900003' );
+
+Select nik, (select no_lahir from kelahiran where kelahiran.no_kk =keluarga.no_kk And rownum<=1) as test, ( select rt from wilayah where keluarga.kodepos=wilayah.kodepos And rownum<=1) as rt from keluarga where nik= (select nik from penduduk where nik='3175092308900003') ;
+
+insert all
+into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(1123, '4448058810973359', 'Selasa', to_date('02/04/1996','dd/mm/yyyy'), 'Sidoarjo', 'Normal')
+into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(1124, '4448058810973378', 'Rabu', to_date('09/12/1998','dd/mm/yyyy'), 'Mojokerto', 'Normal')
+into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(1125, '4448058810973365', 'Rabu', to_date('09/12/1998','dd/mm/yyyy'), 'Mojokerto', 'Normal')
+into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(1126, '4448058810973398', 'Rabu', to_date('09/12/1998','dd/mm/yyyy'), 'Surabaya', 'Normal')
+into kelahiran (no_lahir, no_kk, hari_lahir, tgl_lahir, kota_lahir , "90486_keterangan") values 
+(1127, '3668058810973336', 'Rabu', to_date('09/12/1998','dd/mm/yyyy'), 'Surabaya', 'Normal')
+select 1 from dual;
+
+insert all
+into keluarga (nik, no_lahir, kodepos, no_kk, status , jalan, rt, rw) values 
+('7778086109770000', '1123', '88844', '4448058810973359', 'kawin', 'jl. dan terima apa ada nya 54', '1', '6')
+into keluarga (nik, no_lahir, kodepos, no_kk, status , jalan, rt, rw) values 
+('7778087112600240', '1124', '88845', '4448058810973378', 'Belum kawin', 'jl. lurus 098', '2', '7')
+into keluarga (nik, no_lahir, kodepos, no_kk, status , jalan, rt, rw) values 
+('7778087112640150', '1125', '88847', '4448058810973365', 'Belum kawin', 'jl. belok 45', '7', '9')
+into keluarga (nik, no_lahir, kodepos, no_kk, status , jalan, rt, rw) values 
+('7778087112720100', '1126', '88848', '4448058810973398', 'Belum kawin', 'jl. belok 09', '7', '9')
+into keluarga (nik, no_lahir, kodepos, no_kk, status , jalan, rt, rw) values 
+('7778085212770000', '1127', '88849', '3668058810973336', 'Belum kawin', 'jl. belok 43', '7', '9')
+select 1 from dual;
+
+insert all
+into penduduk (nik, no_kk, nama, jk, agama , pendidikan, pekerjaan, no_telp) values 
+(7778086109770000, '4448058810973359', 'Sri duria', 'P', 'Islam', 'SMA', 'Ibu Rumah tangga', '085133458847')
+into penduduk (nik, no_kk, nama, jk, agama , pendidikan, pekerjaan, no_telp) values 
+(7778087112600240, '4448058810973378', 'novan mangela', 'L', 'Islam', 'SMA', 'Pelajar', '085133457758')
+into penduduk (nik, no_kk, nama, jk, agama , pendidikan, pekerjaan, no_telp) values 
+(7778087112640150, '4448058810973365', 'pona bahela', 'L', 'Islam', 'SMA', 'Pelajar', '085133458825')
+into penduduk (nik, no_kk, nama, jk, agama , pendidikan, pekerjaan, no_telp) values 
+(7778087112720100, '4448058810973398', 'rusdi yanuar', 'L', 'Islam', 'SMA', 'Pelajar', '085133454825')
+into penduduk (nik, no_kk, nama, jk, agama , pendidikan, pekerjaan, no_telp) values 
+(7778085212770000, '3668058810973336', 'doni siman', 'L', 'Islam', 'SMA', 'Pelajar', '085133459925')
+select 1 from dual;
+
+INSERT INTO wilayah
+VALUES(SEQ_wil.nextval, '88844','sawungaling','wonokromo','surabaya','jawa timur');
+INSERT INTO wilayah
+VALUES(SEQ_wil.nextval, '88845','ngagel','wonokromo','surabaya','jawa timur');
+INSERT INTO wilayah
+VALUES(SEQ_wil.nextval, '88847','kutai','wonokromo','surabaya','jawa timur');
+INSERT INTO wilayah
+VALUES(SEQ_wil.nextval, '88848','ngadiluwih','Durenan','Trenggalek','jawa timur');
+INSERT INTO wilayah
+VALUES(SEQ_wil.nextval, '88849','ngampak','Durenan','Trenggalek','jawa timur');
+
+
+ select a.nama, b.status from penduduk a join keluarga b on a.nik=b.nik where jk='L';
+ 
+
+ select a.nama, b.status, c.kota from penduduk a
+ left join keluarga b on a.nik=b.nik
+ left join (select * from wilayah) c on c.kodepos=b.kodepos
+ Where agama in (select agama from penduduk where agama='Islam');
+ 
+
+ select a.nama, b.status, c.kota from penduduk a
+ right join keluarga b on a.nik=b.nik
+ right join wilayah c on c.kodepos=b.kodepos
+ where c.kota=(select min(kota) as terkecil from wilayah) or b.status = 'Belum kawin';
+ 
+
+ CREATE VIEW Pendidikan_S1_Sipil AS select a.nama, b.status from penduduk a join keluarga b on a.nik=b.nik where pendidikan='S1 - Sipil';
+ 
+
+  CREATE VIEW penduduk_lakilaki AS select a.nama, b.status from penduduk a join keluarga b on a.nik=b.nik where jk='L';
+  
+
+  CREATE VIEW penduduk_islam AS select a.nama, b.status, c.kota from penduduk a
+ left join keluarga b on a.nik=b.nik
+ left join (select * from wilayah) c on c.kodepos=b.kodepos
+ Where agama in (select agama from penduduk where agama='Islam');
+ 
+
+ CREATE VIEW nomer_2c AS select a.nama, b.status, c.kota from penduduk a
+ right join keluarga b on a.nik=b.nik
+ right join wilayah c on c.kodepos=b.kodepos
+ where c.kota=(select min(kota) as terkecil from wilayah) or b.status = 'Belum kawin';
+ 
+ 
+
